@@ -21,9 +21,7 @@ cc_library(
         "-Wl,-rpath,$(location @clang-llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04//:libdir)/",
         "-L$(location @clang-llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04//:libdir)/",
 
-        # A minimal-but-practical set for most downstream users.
-        # Prefer the monolithic shared libraries shipped by LLVM releases.
-        "-lclang-cpp",
+        # Prefer the monolithic shared library shipped by LLVM releases.
         "-lLLVM",
 
         # Common system libs (roughly llvm-config --system-libs).
@@ -39,37 +37,3 @@ cc_library(
         "@clang-llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04//:shared_libs",
     ],
 )
-
-genrule(
-    name = "make_clang",
-    srcs = ["@clang-llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04//:clang"],
-    outs = ["clang"],
-    cmd = "cp $< $@ && chmod +x $@",
-    target_compatible_with = select({
-        "//:darwin": ["@platforms//:incompatible"],
-        "//conditions:default": [],
-    }),
-)
-
-genrule(
-    name = "make_clang++",
-    srcs = ["@clang-llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04//:clang++"],
-    outs = ["clang++"],
-    cmd = "cp $< $@ && chmod +x $@",
-    target_compatible_with = select({
-        "//:darwin": ["@platforms//:incompatible"],
-        "//conditions:default": [],
-    }),
-)
-
-genrule(
-    name = "make_opt",
-    srcs = ["@clang-llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04//:opt"],
-    outs = ["opt"],
-    cmd = "cp $< $@ && chmod +x $@",
-    target_compatible_with = select({
-        "//:darwin": ["@platforms//:incompatible"],
-        "//conditions:default": [],
-    }),
-)
-
