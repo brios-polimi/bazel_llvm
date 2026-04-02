@@ -121,3 +121,17 @@ filegroup(
       "https://github.com/llvm/llvm-project/releases/download/llvmorg-13.0.0/clang+llvm-13.0.0-x86_64-linux-gnu-ubuntu-20.04.tar.xz"
     ],
   )
+
+  # LLVM 16.0.0 release binaries.
+  #
+  # Note: The official LLVM 16.0.0 release provides an x86_64 Linux tarball for
+  # Ubuntu 18.04, but does not provide an x86_64 macOS tarball. We therefore
+  # only provide a Linux archive for this version.
+  http_archive(
+    name="clang-llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04",
+    build_file="@llvm//:llvm_linux.BUILD",
+    strip_prefix="clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04",
+    urls=[
+      "https://github.com/llvm/llvm-project/releases/download/llvmorg-16.0.0/clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz",
+    ],
+  )
