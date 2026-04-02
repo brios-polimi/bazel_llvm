@@ -27,8 +27,10 @@ cc_library(
 cc_library(
     name = "libs",
     srcs = glob([
-        "lib/lib*.a",
-        "lib/lib*.so",
+        "lib/**/*.a",
+        "lib/*.a",
+        "lib/**/*.so",
+        "lib/*.so",
     ]),
 )
 
