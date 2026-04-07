@@ -36,18 +36,25 @@ cc_remap_library(
 
 cc_library(
     name = "shared_libs",
-    srcs = glob([
-        "lib/**/*.so",
-        "lib/*.so",
-    ]),
+    srcs = [
+        "lib/libLTO.so",
+        "lib/libRemarks.so",
+        "lib/libarcher.so",
+        "lib/libc++.so",
+        "lib/libc++abi.so",
+        "lib/libclang.so",
+        "lib/libclang-cpp.so",
+        "lib/libgomp.so",
+        "lib/libiomp5.so",
+        "lib/libomp.so",
+        "lib/libomptarget.so",
+        "lib/libunwind.so",
+    ],
 )
 
 cc_library(
     name = "static_libs",
-    srcs = glob([
-        "lib/**/*.a",
-        "lib/*.a",
-    ]),
+    srcs = glob(["lib/*.a"]),
 )
 
 # Generated targets for binaries. See ./scripts/make_wrapper_script.sh
