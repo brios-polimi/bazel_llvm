@@ -5,7 +5,6 @@ licenses(["notice"])
 
 cc_library(
     name = "16.0.0",
-    # LLVM 16.0.0 does not ship an x86_64 macOS release tarball upstream.
     target_compatible_with = select({
         "//:darwin": ["@platforms//:incompatible"],
         "//conditions:default": [],
@@ -20,11 +19,7 @@ cc_library(
     linkopts = [
         "-Wl,-rpath,$(location @clang-llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04//:libdir)/",
         "-L$(location @clang-llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04//:libdir)/",
-
-        # Prefer the monolithic shared library shipped by LLVM releases.
-        "-lLLVM",
-
-        # Common system libs (roughly llvm-config --system-libs).
+        "-lLLVM-16",
         "-lrt",
         "-ldl",
         "-ltinfo",
@@ -34,6 +29,8 @@ cc_library(
     ],
     deps = [
         "@clang-llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04//:headers",
-        "@clang-llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04//:shared_libs",
+        # Removed :shared_libs — it pulls in broken sanitizer libs from
+        # the Ubuntu 18.04 prebuilt that are incompatible with Ubuntu 24.04.
+        # libLLVM-16.so is linked directly via linkopts above instead.
     ],
 )
